@@ -1,0 +1,7 @@
+[run]
+source = .
+omit = *migrations*, *tests*, *dist-packages*, *site-packages*, manage.py, */node_modules/*, *asgi.py, *wsgi.py, *Exceptions.py, *exception.py, *apps.py
+[report]
+fail_under = 100
+show_missing = True
+skip_covered = True

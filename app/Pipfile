@@ -1,0 +1,29 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django = "==3.0.3"
+djangorestframework = "==3.11.0"
+gunicorn = "19.9.0"
+psycopg2-binary = "==2.8.4"
+django-simple-history = "==2.12.0"
+pandas = "==1.1.2"
+requests = "==2.24.0"
+django-cors-headers = "==3.5.0"
+celery = "==4.4.0"
+redis = "==3.4.1"
+django-celery-results = "==1.2.0"
+kombu = "==4.6.11"
+python-memcached = "==1.59"
+mock = "==4.0.1"
+coverage = "==5.0.3"
+pyjwt = "1.7.1"
+boto3 = "==1.16.6"
+sentry-sdk = "==0.14.1"
+
+[requires]
+python_version = "3.8"
