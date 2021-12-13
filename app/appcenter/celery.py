@@ -1,9 +1,12 @@
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import
+from __future__ import unicode_literals
 
+# Standard Library
 import os
 
-from celery import Celery
+# Third Party
 from appcenter.configs.base import REDIS_URI
+from celery import Celery
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appcenter.settings')

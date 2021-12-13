@@ -10,11 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-from sentry_sdk.integrations.django import DjangoIntegration
-import sentry_sdk
-import os
+# Standard Library
 import logging.config
+import os
+
+# Third Party
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 from .configs import base
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -34,10 +39,16 @@ ALLOWED_HOSTS = "*"
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin', 'django.contrib.auth',
-    'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.staticfiles', 'django.contrib.messages', 'rest_framework',
-    'django_celery_results', 'corsheaders', 'health'
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.staticfiles',
+    'django.contrib.messages',
+    'rest_framework',
+    'django_celery_results',
+    'corsheaders',
+    'health',
 ]
 
 MIDDLEWARE = [
@@ -66,9 +77,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+            ]
         },
-    },
+    }
 ]
 
 WSGI_APPLICATION = 'appcenter.wsgi.application'
@@ -84,9 +95,7 @@ DATABASES = {
         "PASSWORD": base.SQL_PASSWORD,
         "HOST": base.SQL_HOST,
         "PORT": base.SQL_PORT,
-        "TEST": {
-            "NAME": "facade-inspector-test",
-        },
+        "TEST": {"NAME": "facade-inspector-test"},
     }
 }
 
@@ -95,21 +104,11 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'
     },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # Internationalization
@@ -128,12 +127,8 @@ USE_TZ = True
 # DRF Config
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-    ],
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ]
+    'DEFAULT_RENDERER_CLASSES': ['rest_framework.renderers.JSONRenderer'],
+    'DEFAULT_PARSER_CLASSES': ['rest_framework.parsers.JSONParser'],
 }
 
 # Logging Configuration
@@ -144,40 +139,35 @@ LOGGING_CONFIG = None
 # Get loglevel from env
 LOGLEVEL = base.LOGLEVEL
 
-logging.config.dictConfig({
-    'version': 1,
-    'formatters': {
-        'verbose': {
-            'format':
-            '%(levelname)s %(asctime)s %(name)s:%(lineno)d %(message)s'
+logging.config.dictConfig(
+    {
+        'version': 1,
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(name)s:%(lineno)d %(message)s'
+            },
+            'simple': {'format': '%(levelname)s %(message)s'},
         },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
+        'handlers': {
+            'console': {
+                'level': LOGLEVEL,
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple',
+            }
         },
-    },
-    'handlers': {
-        'console': {
-            'level': LOGLEVEL,
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        }
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console'],
-            'level': LOGLEVEL,
-            'propagate': True,
+        'loggers': {
+            '': {'handlers': ['console'], 'level': LOGLEVEL, 'propagate': True}
         },
-    },
-})
+    }
+)
 
 sentry_sdk.init(
     dsn=base.DSN_SENTRY,
     integrations=[DjangoIntegration()],
-
     # If you wish to associate users to errors (assuming you are using
     # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True)
+    send_default_pii=True,
+)
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'

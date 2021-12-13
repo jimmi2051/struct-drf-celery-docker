@@ -1,3 +1,4 @@
+# Standard Library
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -5,8 +6,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "tV#Um9F!ErXB6ydv6YTeyVtyFjxA5r")
 LOGLEVEL = os.environ.get('DJANGO_LOGLEVEL', 'info').upper()
 # Config for database
 SQL_ENGINE = os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3")
-SQL_DATABASE = os.environ.get("SQL_DATABASE",
-                              os.path.join(BASE_DIR, "db.sqlite3"))
+SQL_DATABASE = os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3"))
 SQL_USER = os.environ.get("SQL_USER", "user")
 SQL_PASSWORD = os.environ.get("SQL_PASSWORD", "password")
 SQL_HOST = os.environ.get("SQL_HOST", "localhost")

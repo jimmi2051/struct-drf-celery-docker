@@ -15,4 +15,4 @@ htmlcov/
 coverage.xml
 *.cover
 
-.vscode
+# .vscode

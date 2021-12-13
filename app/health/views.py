@@ -1,10 +1,16 @@
+# Standard Library
 import logging
+
+# Third Party
+import boto3
+from appcenter.utils import log_error
+from appcenter.utils import response_500
 from django.http import JsonResponse
-from django.shortcuts import render
-from rest_framework.decorators import api_view
 from rest_framework import status
-from appcenter.utils import response_500, log_error
+from rest_framework.decorators import api_view
+
 from .tasks import add
+
 logger = logging.getLogger(__name__)
 
 
@@ -13,15 +19,15 @@ def healthCheck(request):
     try:
         response_200 = {"description": "the service is healthy"}
 
-        return JsonResponse(data=response_200,
-                            safe=False,
-                            status=status.HTTP_200_OK)
+        return JsonResponse(data=response_200, safe=False, status=status.HTTP_200_OK)
 
     except Exception as e:
         log_error(logger, "healthCheck", str(e))
-        return JsonResponse(data=response_500(),
-                            safe=False,
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return JsonResponse(
+            data=response_500(),
+            safe=False,
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
 
 
 @api_view(['GET'])
@@ -32,15 +38,17 @@ def testCelery(request):
         return JsonResponse(data=result, safe=False, status=status.HTTP_200_OK)
     except Exception as e:
         log_error(logger, "celeryConfig", str(e))
-        return JsonResponse(data=response_500(),
-                            safe=False,
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return JsonResponse(
+            data=response_500(),
+            safe=False,
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
 
 
 @api_view(['GET'])
 def testS3Config(request):
     try:
-        import boto3
+
         s3 = boto3.resource('s3')
         buckets = []
         for bucket in s3.buckets.all():
@@ -50,6 +58,8 @@ def testS3Config(request):
 
     except Exception as e:
         log_error(logger, "S3Config", str(e))
-        return JsonResponse(data=response_500(),
-                            safe=False,
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return JsonResponse(
+            data=response_500(),
+            safe=False,
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )

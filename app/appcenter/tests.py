@@ -1,10 +1,19 @@
-from django.test import TestCase
-import requests
+# Standard Library
 import json
 import logging
-from mock import Mock, patch
+
+# Third Party
+import requests
+from django.test import TestCase
+from mock import Mock
+from mock import patch
+
+from .utils import log_error
+from .utils import log_info
+from .utils import response_400
+from .utils import response_401
+from .utils import response_500
 from .views import page_not_found
-from .utils import log_info, log_error, response_400, response_401, response_500
 
 logger = logging.getLogger("logger_test")
 
@@ -14,23 +23,22 @@ class ViewsTest(TestCase):
         expect_response = {"message": "Not found !"}
         response = page_not_found()
         self.assertEqual(response.status_code, 404)
-        self.assertJSONEqual(str(response.content, encoding='utf8'),
-                             expect_response)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), expect_response)
 
 
 class UtilsTest(TestCase):
     def tests_log_info(self):
         with self.assertLogs(logger="logger_test", level="INFO") as cm:
             log_info(logger, "/healthCheck", "Ok")
-            self.assertIn("INFO:logger_test:API [/healthCheck], [Data] Ok",
-                          cm.output)
+            self.assertIn("INFO:logger_test:API [/healthCheck], [Data] Ok", cm.output)
 
     def tests_log_error(self):
         with self.assertLogs(logger="logger_test", level="ERROR") as cm:
             log_error(logger, "/healthCheck", "Internal Server")
             self.assertIn(
                 "ERROR:logger_test:API [/healthCheck], [Error] Internal Server",
-                cm.output)
+                cm.output,
+            )
 
     def tests_response_400(self):
         expect_response = {"description": "bad input parameter"}

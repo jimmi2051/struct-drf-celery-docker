@@ -87,15 +87,65 @@ docker-compose up --build -d
 
 ## Contributing
 
-1. Install new package
+### Pre-setup for contributing
+
+1. Install `black` and `isort`
+
+```
+pipenv shell
+pip3 install black
+pip3 install isort
+pip3 install flake8
+```
+
+2. (Optional) IDE Visual Studio Code **(N.01)**
+   1.1 Create folder **.vscode** and create file **.settings.json** in that. > **.vscode/.settings.json**
+   1.2 Add the script below and save
+
+```
+{
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": ["--ignore=E501,W503"],
+  "python.formatting.provider": "black",
+  "python.sortImports.args": ["--profile", "black"],
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "python.formatting.blackArgs": [
+    "--skip-string-normalization",
+    "--skip-magic-trailing-comma"
+  ]
+}
+```
+
+### Install new package
 
 ```
 1. rm -rf Pipfile.lock # Remove Pipfile.lock
-2. docker exec -it <folder-name>_app_1 bash # Attach Shell to container web
+2 (Option with docker) docker exec -it sap_app_1 bash # Attach Shell to container web
 3. pipenv shell # Active environment
 4. pipenv install <package-name> # Install new package
 5. pipenv install # Generate new Pipfile.lock
 ```
+
+### Before push code to repository
+
+(\*) Run command bellow
+
+```
+1. pipenv shell
+2. isort . # format sort import library
+3. black . # format code
+4. flake8 --ignore=E501,F401,W503 . # Check issue and fix if have.
+```
+
+_(If use IDE Visual Studio Code and configured **(N.01)** can skip step 2 and step 3)_
 
 ## Versioning
 
