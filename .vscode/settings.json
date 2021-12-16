@@ -1,25 +1,34 @@
 {
-  "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": [
-    "--ignore=E501,W503"
-  ],
-  "python.formatting.provider": "black",
-  "python.sortImports.args": [
-    "--profile",
-    "black"
-  ],
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[python]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  },
-  "python.formatting.blackArgs": [
-    "--skip-string-normalization",
-    "--skip-magic-trailing-comma"
-  ],
+  {
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+      "--ignore=E501,W503",
+      "--verbose",
+      "--max-line-length=120"
+    ],
+    "python.formatting.provider": "black",
+    "python.sortImports.args": ["--profile", "black"],
+    "[python]": {
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      },
+      "gitlens.codeLens.symbolScopes": ["!Module"]
+    },
+    "python.formatting.blackArgs": [
+      "--skip-string-normalization",
+      "--skip-magic-trailing-comma"
+    ],
+    "python.linting.pylintEnabled": true,
+    "beautify.language": {
+      "html": ["django-html"]
+    },
+    "[django-html]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "python.linting.pylintArgs": ["--load-plugins=pylint_django"]
+  }
   "python.defaultInterpreterPath": "/home/deftnt/.local/share/virtualenvs/sap_service-xp9ShFb7/bin/python"
 }
