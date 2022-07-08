@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'django_celery_results',
     'corsheaders',
     'health',
+    'entity',
+    'infastructure',
+    'apps',
 ]
 
 MIDDLEWARE = [
