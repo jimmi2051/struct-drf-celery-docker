@@ -1,7 +1,7 @@
 # Third Party
-from celery import task
+from celery import shared_task
 
 
-@task(name="add")
+@shared_task(name="add")
 def add(x, y):
     return x + y
