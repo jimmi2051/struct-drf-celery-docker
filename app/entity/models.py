@@ -1,6 +1,2 @@
-# Third Party
-from django.db import models
-
-'''
-    Write all models in here
-'''
+# My Project
+from entity.book.bookModel import Book

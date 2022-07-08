@@ -1,10 +1,8 @@
 # Third Party
-from django.conf.urls import url
 from django.urls import path
 from health.views import healthCheck
 from health.views import testCelery
 from health.views import testS3Config
-from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
     path('healthCheck', healthCheck, name="healthCheck"),

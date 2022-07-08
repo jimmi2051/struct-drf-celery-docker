@@ -34,7 +34,7 @@ DEBUG = ENV not in ["production"]
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-ALLOWED_HOSTS = "*"
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
 
 # Application definition
 
@@ -50,8 +50,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'health',
     'entity',
+    'service',
+    'main',
     'infastructure',
-    'apps',
 ]
 
 MIDDLEWARE = [
@@ -98,7 +99,7 @@ DATABASES = {
         "PASSWORD": base.SQL_PASSWORD,
         "HOST": base.SQL_HOST,
         "PORT": base.SQL_PORT,
-        "TEST": {"NAME": "facade-inspector-test"},
+        "TEST": {"NAME": f'{base.SQL_DATABASE}_test'},
     }
 }
 
@@ -130,8 +131,20 @@ USE_TZ = True
 # DRF Config
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': ['rest_framework.renderers.JSONRenderer'],
-    'DEFAULT_PARSER_CLASSES': ['rest_framework.parsers.JSONParser'],
+    'DEFAULT_RENDERER_CLASSES': ['infastructure.renderers.JobhopCamelCaseJSONRenderer'],
+    'DEFAULT_PARSER_CLASSES': [
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+        'djangorestframework_camel_case.parser.FormParser',
+        'djangorestframework_camel_case.parser.MultiPartParser',
+    ],
+    'EXCEPTION_HANDLER': 'infastructure.exception_handler.custom_exception_handler',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        # Custom authentication
+        # 'authentication.base.JWTAuthentication',
+    ],
 }
 
 # Logging Configuration
@@ -188,3 +201,5 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 6291456
 CORS_ORIGIN_ALLOW_ALL = True
 
 STATIC_URL = '/static/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

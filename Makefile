@@ -1,37 +1,37 @@
 build:
-	cd app && docker build -t deftnt .
+	cd app && docker build -t app .
 
 start:
-	docker-compose -p deftnt up -d
+	docker-compose -p app up -d
 
 restart:
-	docker-compose -p deftnt restart
+	docker-compose -p app restart
 
 reset:
-	docker-compose -p deftnt down
+	docker-compose -p app down
 
-	docker-compose -p deftnt up -d
+	docker-compose -p app up -d
 
 stop:
-	docker-compose -p deftnt stop
+	docker-compose -p app stop
 
 down:
-	docker-compose -p deftnt down
+	docker-compose -p app down
 
 down_v:
-	docker-compose -p deftnt down -v
+	docker-compose -p app down -v
 
 migrate:
-	docker exec -it deftnt_app_1 pipenv run python3 manage.py migrate
+	docker exec -it app_app_1 pipenv run python3 manage.py migrate
 
 coverage_test:
-	docker exec -it deftnt_app_1 pipenv run coverage run manage.py test
+	docker exec -it app_app_1 pipenv run coverage run manage.py test
 
 coverage_report:
-	docker exec -it deftnt_app_1 pipenv run coverage report
+	docker exec -it app_app_1 pipenv run coverage report
 
 coverage_view:
-	docker exec -it deftnt_app_1 pipenv run coverage html
+	docker exec -it app_app_1 pipenv run coverage html
 
 test:
-	docker exec -it deftnt_app_1 pipenv run python3 manage.py test
+	docker exec -it app_app_1 pipenv run python3 manage.py test

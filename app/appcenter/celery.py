@@ -16,7 +16,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appcenter.settings')
 # - namespace='CELERY' means all celery-related configuration keys
 #   should have a `CELERY_` prefix.
 
-app = Celery('facecompare', broker=REDIS_URI)
+app = Celery('celery', broker=REDIS_URI)
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
